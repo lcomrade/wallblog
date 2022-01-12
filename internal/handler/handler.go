@@ -46,35 +46,8 @@ func Hand(rw http.ResponseWriter, req *http.Request) {
 		mdHand(rw, path)
 		return
 
-		// *.css file
-	} else if ext == ".css" {
-		rw.Header().Set("Content-type", "text/css")
-
-		// *.html file
-	} else if ext == ".html" {
-		rw.Header().Set("Content-type", "text/html")
-
-		// *.js file
-	} else if ext == ".js" {
-		rw.Header().Set("Content-type", "application/javascript")
-
-		// *.ico file
-	} else if ext == ".ico" {
-		rw.Header().Set("Content-type", "image/x-icon")
-
-		// *.gif file
-	} else if ext == ".gif" {
-		rw.Header().Set("Content-type", "image/gif")
-
-		// *.png file
-	} else if ext == ".png" {
-		rw.Header().Set("Content-type", "image/png")
-
-		// *.jpg/*.jpeg file
-	} else if ext == ".jpg" || ext == ".jpeg" {
-		rw.Header().Set("Content-type", "image/jpeg")
+		// Other files
+	} else {
+		http.ServeFile(rw, req, path)
 	}
-
-	// Write file
-	http.ServeFile(rw, req, path)
 }

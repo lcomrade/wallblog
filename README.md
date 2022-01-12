@@ -10,5 +10,6 @@ At the moment, installation is only possible with Docker.
 Read more on the [Docker Hub page](https://hub.docker.com/r/lcomrade/wallblog).
 
 ## Documentation
+- [Configuration Guid](docs/config.md)
 - [Markdown Syntax Guide](https://github.com/lcomrade/md2html/blob/main/docs/syntax_guide.md)
 - [Changelog](CHANGELOG.md)

@@ -55,9 +55,7 @@ func main() {
 	handler.ServerRoot = webRoot
 
 	// Add handlers
-	http.HandleFunc("/", handler.Article)
-	http.HandleFunc("/style.css", handler.Style)
-	http.HandleFunc("/favicon.ico", handler.Favicon)
+	http.HandleFunc("/", handler.Hand)
 
 	// Print init info
 	println("path: config file:", configFile)

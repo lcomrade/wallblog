@@ -22,46 +22,18 @@ import (
 	"github.com/lcomrade/md2html"
 	"io"
 	"net/http"
-	"os"
 	"path/filepath"
 )
 
-// Article page handler
-func Article(rw http.ResponseWriter, req *http.Request) {
-	// File or dir? Find path.
-	path := filepath.Join(ServerRoot, "article", req.URL.Path)
-
-	file, err := os.Stat(path)
-	if err == nil && file.IsDir() {
-		path = filepath.Join(path, "index.md")
-	}
-
+// Markdown page handler
+func mdHand(rw http.ResponseWriter, path string) {
 	// Set response header
 	rw.Header().Set("Content-type", "text/html")
 
 	// PAGE ARTICLE
 	pageArticle, err := md2html.ConvertFile(path)
 	if err != nil {
-		// File not exist
-		if os.IsNotExist(err) {
-			rw.WriteHeader(404)
-			pageArticle = `<h1>404 Not found</h1>`
-
-			// Permission is denied
-		} else if os.IsPermission(err) {
-			rw.WriteHeader(500)
-			pageArticle = `<h1>500 Internal Server Error</h1>`
-
-			// File read timeout
-		} else if os.IsTimeout(err) {
-			rw.WriteHeader(500)
-			pageArticle = `<h1>500 Internal Server Error</h1>`
-
-			// Other errors
-		} else {
-			rw.WriteHeader(500)
-			pageArticle = `<h1>500 Internal Server Error</h1>`
-		}
+		errWrite(err, rw)
 	}
 
 	// PAGE HEADER

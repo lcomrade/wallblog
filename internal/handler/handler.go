@@ -18,4 +18,63 @@
 
 package handler
 
+import (
+	"net/http"
+	"os"
+	"path/filepath"
+)
+
 var ServerRoot string = "."
+
+func Hand(rw http.ResponseWriter, req *http.Request) {
+	// Find path
+	path := filepath.Join(ServerRoot, req.URL.Path)
+	ext := filepath.Ext(path)
+
+	// If dir
+	file, err := os.Stat(path)
+	if err == nil {
+		if file.IsDir() {
+			path = filepath.Join(path, "index.md")
+			mdHand(rw, path)
+			return
+		}
+	}
+
+	// *.md file
+	if ext == ".md" {
+		mdHand(rw, path)
+		return
+
+		// *.css file
+	} else if ext == ".css" {
+		rw.Header().Set("Content-type", "text/css")
+
+		// *.html file
+	} else if ext == ".html" {
+		rw.Header().Set("Content-type", "text/html")
+
+		// *.js file
+	} else if ext == ".js" {
+		rw.Header().Set("Content-type", "application/javascript")
+
+		// *.ico file
+	} else if ext == ".ico" {
+		rw.Header().Set("Content-type", "image/x-icon")
+
+		// *.gif file
+	} else if ext == ".gif" {
+		rw.Header().Set("Content-type", "image/gif")
+
+		// *.png file
+	} else if ext == ".png" {
+		rw.Header().Set("Content-type", "image/png")
+
+		// *.jpg/*.jpeg file
+	} else if ext == ".jpg" || ext == ".jpeg" {
+		rw.Header().Set("Content-type", "image/jpeg")
+	}
+
+	// Write file
+	http.ServeFile(rw, req, path)
+}

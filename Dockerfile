@@ -17,6 +17,8 @@ WORKDIR /
 
 COPY --from=build /build/dist/bin/wallblog /usr/bin/wallblog
 
+RUN mkdir -p /etc/wallblog && touch /etc/wallblog/config.json
+
 EXPOSE 80/tcp
 EXPOSE 443/tcp
 

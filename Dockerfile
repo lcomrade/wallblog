@@ -17,12 +17,12 @@ WORKDIR /
 
 COPY --from=build /build/dist/bin/wallblog /usr/bin/wallblog
 
-RUN mkdir -p /etc/wallblog && touch /etc/wallblog/config.json
+RUN mkdir -p /etc/wallblog && mkdir -p /var/lib/wallblog
 
 EXPOSE 80/tcp
 EXPOSE 443/tcp
 
-VOLUME /var/lib/wallblog
 VOLUME /etc/wallblog
+VOLUME /var/lib/wallblog
 
 CMD [ "/usr/bin/wallblog" ]

@@ -34,6 +34,7 @@ func mdHand(rw http.ResponseWriter, path string) {
 	pageArticle, err := md2html.ConvertFile(path)
 	if err != nil {
 		errWrite(err, rw)
+		return
 	}
 
 	// PAGE HEADER

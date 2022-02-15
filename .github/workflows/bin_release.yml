@@ -1,0 +1,32 @@
+name: publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install GNU Make
+        shell: bash
+        run: sudo apt-get -y install make
+
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.15.15'
+
+      - name: Make
+        run: make release
+
+      - name: Upload release binaries
+        uses: alexellis/upload-assets@0.2.2
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          asset_paths: '["./release/*"]'

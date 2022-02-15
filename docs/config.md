@@ -20,9 +20,10 @@ Default:
 ```
 
 ## /var/lib/wallblog/*
-- `./header.md` - Page header
-- `./footer.md` - Page footer
-- `./style.css` - Page CSS style
+- `./header.md` - page header (in MarkDown)
+- `./footer.md` - page footer (in MarkDown)
+- `./style.css` - page CSS style
 - `./favicon.ico` - site icon
 - `**/index.md` - works like `index.html`
 - `**.md` - convert to HTML
+- `**` - other files

@@ -19,61 +19,48 @@
 package main
 
 import (
-	"../internal/cfg"
-	"../internal/handler"
-	"net/http"
-	"path/filepath"
+	"flag"
+	"os"
 )
 
-// Run HTTP server
-func serveHTTP(port string, errs chan<- error) {
-	errs <- http.ListenAndServe(port, nil)
+func printVersion() {
+	println("1.0.0")
 }
 
-// Run HTTPS server
-func serveHTTPS(port string, cert string, key string, errs chan<- error) {
-	errs <- http.ListenAndServeTLS(port, cert, key, nil)
+func printHelp() {
+	println("Usage:", os.Args[0], "[OPTION]...")
+	println("Lightweight blogging engine with markdown support.")
+	println("")
+	println("-config   path to config file")
+	println("-help     display this help and exit")
+	println("-version  output version information and exit")
 }
 
-// Read flags and init http server
 func main() {
-	// Find paths
-	configFile := "/etc/wallblog/config.json"
+	// Read cmd args
+	flag.Usage = printHelp
 
-	// Read config
-	config, err := cfg.Read(configFile)
+	flagConfig := flag.String("config", "/etc/wallblog/config.json", "")
+	flagHelp := flag.Bool("help", false, "")
+	flagVersion := flag.Bool("version", false, "")
+
+	flag.Parse()
+
+	// -help flag
+	if *flagHelp == true {
+		printHelp()
+		os.Exit(0)
+	}
+
+	// -version flag
+	if *flagVersion == true {
+		printVersion()
+		os.Exit(0)
+	}
+
+	// Run WEB server
+	err := runServer(*flagConfig)
 	if err != nil {
 		panic(err)
 	}
-
-	// Set handler config
-	webRoot, err := filepath.Abs(config.WebRoot)
-	if err != nil {
-		panic(err)
-	}
-
-	handler.ServerRoot = webRoot
-
-	// Add handlers
-	http.HandleFunc("/", handler.Hand)
-
-	// Print init info
-	println("path: config file:", configFile)
-	println("path: web root:", webRoot)
-
-	// Run server
-	errs := make(chan error, 1)
-
-	if config.HTTP.Enable {
-		println("run: http:", config.HTTP.Port)
-		serveHTTP(config.HTTP.Port, errs)
-	}
-
-	if config.HTTPS.Enable {
-		println("run: https:", config.HTTP.Port)
-		serveHTTPS(config.HTTPS.Port, config.HTTPS.Cert, config.HTTPS.Key, errs)
-	}
-
-	// If serve error
-	panic(<-errs)
 }

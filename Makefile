@@ -1,9 +1,11 @@
 NAME = wallblog
+MAIN_GO = ./cmd/$(NAME)*
+LDFLAGS = -w -s
 
 all:
 	mkdir -p ./dist/bin/
 
-	go build -ldflags="-w -s" -o ./dist/bin/$(NAME) ./cmd/$(NAME).go
+	go build -ldflags="$(LDFLAGS)" -o ./dist/bin/$(NAME) $(MAIN_GO)
 	chmod +x ./dist/bin/$(NAME)
 
 fmt:

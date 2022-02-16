@@ -1,7 +1,8 @@
 name: Docker (release)
 on:
-  release:
-    types: [ released ]
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -27,7 +28,7 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/wallblog:${GITHUB_REF:11},${{ secrets.DOCKER_HUB_USERNAME }}/latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/wallblog:${{ github.ref_name }},${{ secrets.DOCKER_HUB_USERNAME }}/latest
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

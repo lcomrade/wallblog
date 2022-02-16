@@ -5,6 +5,12 @@
 
 **wallblog** - lightweight blogging engine with markdown support.
 
+Features:
+- Page formatting in markdown
+- Custom page header and footer (in markdown)
+- Custom CSS style
+- HTTP and HTTPS
+
 
 ## 📦Install binary release
 ### UNIX-like systems
@@ -20,7 +26,7 @@ Read more on the [Docker Hub page](https://hub.docker.com/r/lcomrade/wallblog).
 
 
 
-## Build from source
+## 🗜️Build from source
 Build deps:
 - GNU Make
 - Golang <= 1.15
@@ -68,5 +74,5 @@ Default:
 
 
 ## 📑Documentation
-- [Markdown Syntax Guide](https://github.com/lcomrade/md2html/blob/main/docs/syntax_guide.md)
 - [Changelog](CHANGELOG.md)
+- [MD2HTML: Markdown Syntax Guide](https://github.com/lcomrade/md2html/blob/main/docs/syntax_guide.md)

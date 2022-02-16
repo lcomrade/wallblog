@@ -25,7 +25,7 @@ Build deps:
 - GNU Make
 - Golang <= 1.15
 
-```bash
+```
 git clone https://github.com/lcomrade/wallblog.git
 cd ./wallblog
 make
@@ -35,8 +35,8 @@ You can find result of build in `./dist/` directory.
 
 
 
-## ⚙️Configuration
-### `/etc/wallblog/config.json`
+# ⚙️Configuration
+## /etc/wallblog/config.json
 To apply the changes in this file, you must restart the program.
 
 Default:
@@ -56,9 +56,9 @@ Default:
 }
 ```
 
-### `/var/lib/wallblog/*`
-- `./header.md` - page header (in markdown)
-- `./footer.md` - page footer (in markdown)
+## /var/lib/wallblog/*
+- `./header.md` - page header (in MarkDown)
+- `./footer.md` - page footer (in MarkDown)
 - `./style.css` - page CSS style
 - `./favicon.ico` - site icon
 - `**/index.md` - works like `index.html`
@@ -67,6 +67,7 @@ Default:
 
 
 
-## 📑Documentation
+## 🔖Documentation
+- [Configuration Guid](docs/config.md)
 - [Markdown Syntax Guide](https://github.com/lcomrade/md2html/blob/main/docs/syntax_guide.md)
 - [Changelog](CHANGELOG.md)

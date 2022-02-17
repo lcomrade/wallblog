@@ -19,56 +19,76 @@
 package handler
 
 import (
+	"github.com/lcomrade/md2html"
 	"io"
 	"net/http"
 	"os"
+	"path/filepath"
 )
 
 func errWrite(err error, rw http.ResponseWriter) {
+	var httpCode int
 	var errName string
 	var errDesc string
+	var customPageFile string
 
 	// File not exist
 	if os.IsNotExist(err) {
-		rw.WriteHeader(404)
+		httpCode = 404
 		errName = "404 Not found"
 		errDesc = "File not exist"
+		customPageFile = "404.md"
 
 		// Permission is denied
 	} else if os.IsPermission(err) {
-		rw.WriteHeader(500)
+		httpCode = 500
 		errName = "500 Internal Server Error"
 		errDesc = "Permission denied"
+		customPageFile = "500_permission_denied.md"
 
 		// File read timeout
 	} else if os.IsTimeout(err) {
-		rw.WriteHeader(500)
+		httpCode = 500
 		errName = "500 Internal Server Error"
 		errDesc = "File read timeout"
+		customPageFile = "500_file_read_timeout.md"
 
 		// Other errors
 	} else {
-		rw.WriteHeader(500)
+		httpCode = 500
 		errName = "500 Internal Server Error"
 		errDesc = "Unknown"
+		customPageFile = "500_unknown.md"
 	}
 
-	// PAGE
+	// Custom page
+	pageBody, err := md2html.ConvertFile(filepath.Join(ServerRoot, customPageFile))
+
+	// Default page
+	if err != nil {
+		pageBody = `
+<h1>` + errName + `</h1>
+<hr />
+<p>` + errDesc + `</p>
+`
+	}
+
+	// Build page
 	page := `
 <!DOCTYPE HTML>
 <html>
 	<head>
 		<meta charset='utf-8'>
+		<link rel='stylesheet' type='text/css' href='/error.css'>
 	</head>
 	<body>
-		<h1>` + errName + `</h1>
-		<hr />
-		<p>` + errDesc + `</p>
+		` + pageBody + `
 	</body>
 </html>
 `
 
 	// Write resposnse body
+	rw.WriteHeader(httpCode)
 	rw.Header().Set("Content-type", "text/html")
 	io.WriteString(rw, page)
 }

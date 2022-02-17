@@ -65,6 +65,7 @@ Default:
 ```
 
 ### `/var/lib/wallblog/*`
+Pages:
 - `./header.md` - page header (in markdown)
 - `./footer.md` - page footer (in markdown)
 - `./style.css` - page CSS style
@@ -72,6 +73,13 @@ Default:
 - `**/index.md` - works like `index.html`
 - `**.md` - convert to HTML
 - `**` - other files
+
+Custom error pages:
+- `./error.css` - error page CSS style
+- `./404.md`
+- `./500_permission_denied.md`
+- `./500_file_read_timeout.md`
+- `./500_unknown.md`
 
 
 

@@ -20,44 +20,43 @@ package handler
 
 import (
 	"github.com/lcomrade/md2html"
-	"io"
-	"net/http"
+	"io/ioutil"
+	"os"
+	"path/filepath"
 )
 
-// Markdown page handler
-func mdHand(rw http.ResponseWriter, path string) {
-	// Set response header
-	rw.Header().Set("Content-type", "text/html")
-
-	// PAGE ARTICLE
-	pageArticle, err := md2html.ConvertFile(path)
+func readFile(path string) (string, error) {
+	// Open file
+	file, err := os.Open(path)
 	if err != nil {
-		errWrite(err, rw)
-		return
+		return "", err
+	}
+	defer file.Close()
+
+	// Read file
+	fileByte, err := ioutil.ReadAll(file)
+	if err != nil {
+		return "", err
 	}
 
-	// PAGE HEADER
-	pageHeader := pagePart("header")
+	return string(fileByte), nil
+}
 
-	// PAGE FOOTER
-	pageFooter := pagePart("footer")
+func pagePart(nameWithoutExt string) string {
+	basePath := filepath.Join(ServerRoot, nameWithoutExt)
 
-	// PAGE
-	page := `
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<meta charset='utf-8'>
-		<link rel='stylesheet' type='text/css' href='/style.css'>
-	</head>
-	<body>
-		<header>` + pageHeader + `</header>
-		<article>` + pageArticle + `</article>
-		<footer>` + pageFooter + `</footer>
-	</body>
-</html>
-`
+	// htmlp file
+	page, err := readFile(basePath + ".htmlp")
+	if err == nil {
+		return page
+	}
 
-	// Write resposnse body
-	io.WriteString(rw, page)
+	// md file
+	page, err = md2html.ConvertFile(basePath + ".md")
+	if err == nil {
+		return page
+	}
+
+	// Not found
+	return ""
 }

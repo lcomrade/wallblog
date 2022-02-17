@@ -65,21 +65,30 @@ Default:
 ```
 
 ### `/var/lib/wallblog/*`
-Pages:
-- `./header.md` - page header (in markdown)
-- `./footer.md` - page footer (in markdown)
-- `./style.css` - page CSS style
-- `./favicon.ico` - site icon
-- `**/index.md` - works like `index.html`
+#### Pages and files
 - `**.md` - convert to HTML
+- `**/index.md` - works like `index.html`
 - `**` - other files
 
-Custom error pages:
+#### Custom page design
+- `./header.htmlp` or `./header.md` - page header
+- `./footer.htmlp` or `./footer.md` - page footer
+- `./style.css` - page CSS style
+- `./favicon.ico` - site icon
+
+#### Custom error pages
 - `./error.css` - error page CSS style
-- `./404.md`
-- `./500_permission_denied.md`
-- `./500_file_read_timeout.md`
-- `./500_unknown.md`
+- `./404.htmlp` or `./404.md`
+- `./500_permission_denied.htmlp` or `./500_permission_denied.md`
+- `./500_file_read_timeout.htmlp` or `./500_file_read_timeout.md`
+- `./500_unknown.htmlp` or `./500_unknown.md`
+
+
+### Markdown and HTMLP formats
+`**.md` files - normal Markdown with support for HTML tags.
+
+`**.htmlp` files - only HTML tags are supported.
+Put there what is usually between `<body></body>`.
 
 
 

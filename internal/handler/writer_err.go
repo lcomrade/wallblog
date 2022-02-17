@@ -19,11 +19,9 @@
 package handler
 
 import (
-	"github.com/lcomrade/md2html"
 	"io"
 	"net/http"
 	"os"
-	"path/filepath"
 )
 
 func errWrite(err error, rw http.ResponseWriter) {
@@ -37,35 +35,35 @@ func errWrite(err error, rw http.ResponseWriter) {
 		httpCode = 404
 		errName = "404 Not found"
 		errDesc = "File not exist"
-		customPageFile = "404.md"
+		customPageFile = "404"
 
 		// Permission is denied
 	} else if os.IsPermission(err) {
 		httpCode = 500
 		errName = "500 Internal Server Error"
 		errDesc = "Permission denied"
-		customPageFile = "500_permission_denied.md"
+		customPageFile = "500_permission_denied"
 
 		// File read timeout
 	} else if os.IsTimeout(err) {
 		httpCode = 500
 		errName = "500 Internal Server Error"
 		errDesc = "File read timeout"
-		customPageFile = "500_file_read_timeout.md"
+		customPageFile = "500_file_read_timeout"
 
 		// Other errors
 	} else {
 		httpCode = 500
 		errName = "500 Internal Server Error"
 		errDesc = "Unknown"
-		customPageFile = "500_unknown.md"
+		customPageFile = "500_unknown"
 	}
 
 	// Custom page
-	pageBody, err := md2html.ConvertFile(filepath.Join(ServerRoot, customPageFile))
+	pageBody := pagePart(customPageFile)
 
 	// Default page
-	if err != nil {
+	if pageBody == "" {
 		pageBody = `
 <h1>` + errName + `</h1>
 <hr />

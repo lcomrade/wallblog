@@ -31,23 +31,26 @@ func Hand(rw http.ResponseWriter, req *http.Request) {
 	path := filepath.Join(ServerRoot, req.URL.Path)
 	ext := filepath.Ext(path)
 
-	// If dir
+	// Get file info
 	file, err := os.Stat(path)
-	if err == nil {
-		if file.IsDir() {
-			path = filepath.Join(path, "index.md")
-			mdHand(rw, path)
-			return
-		}
+	if err != nil {
+		errWrite(err, rw)
+		return
+	}
+
+	// Directory
+	if file.IsDir() {
+		path = filepath.Join(path, "index.md")
+		mdHand(rw, path)
+		return
 	}
 
 	// *.md file
 	if ext == ".md" {
 		mdHand(rw, path)
 		return
-
-		// Other files
-	} else {
-		http.ServeFile(rw, req, path)
 	}
+
+	// Other files
+	http.ServeFile(rw, req, path)
 }

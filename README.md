@@ -3,7 +3,7 @@
 [![Release](https://img.shields.io/github/v/release/lcomrade/wallblog)](https://github.com/lcomrade/wallblog/releases/latest)
 [![License](https://img.shields.io/github/license/lcomrade/wallblog)](LICENSE)
 
-**wallblog** - lightweight blogging engine with markdown support.
+**WallBlog** - lightweight blogging engine with markdown support.
 
 Features:
 - Page formatting in markdown
@@ -26,14 +26,16 @@ Read more on the [Docker Hub page](https://hub.docker.com/r/lcomrade/wallblog).
 
 
 
-## 🗜️Build from source
+## 🔨Build from source
 Build deps:
+- Git
 - GNU Make
 - Golang <= 1.15
 
 ```bash
 git clone https://github.com/lcomrade/wallblog.git
 cd ./wallblog
+go get github.com/lcomrade/md2html
 make
 ```
 

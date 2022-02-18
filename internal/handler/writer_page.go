@@ -19,19 +19,35 @@
 package handler
 
 import (
-	"github.com/lcomrade/md2html"
+	"io"
 	"net/http"
 )
 
-// Markdown page handler
-func mdHand(rw http.ResponseWriter, path string) {
-	// Read page article
-	pageArticle, err := md2html.ConvertFile(path)
-	if err != nil {
-		errWrite(err, rw)
-		return
-	}
+func pageWrite(pageArticle string, rw http.ResponseWriter) {
+	// PAGE HEADER
+	pageHeader := pagePart("header")
 
-	// Send page
-	pageWrite(pageArticle, rw)
+	// PAGE FOOTER
+	pageFooter := pagePart("footer")
+
+	// PAGE
+	page := `
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<link rel='stylesheet' type='text/css' href='/style.css'>
+	</head>
+	<body>
+		<header>` + pageHeader + `</header>
+		<article>` + pageArticle + `</article>
+		<footer>` + pageFooter + `</footer>
+	</body>
+</html>
+`
+
+	// Write resposnse body
+	rw.WriteHeader(200)
+	rw.Header().Set("Content-type", "text/html")
+	io.WriteString(rw, page)
 }

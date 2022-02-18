@@ -51,6 +51,12 @@ func Hand(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	// *.htmlp file
+	if ext == ".htmlp" {
+		htmlpHand(rw, path)
+		return
+	}
+
 	// Other files
 	http.ServeFile(rw, req, path)
 }

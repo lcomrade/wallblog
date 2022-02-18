@@ -19,14 +19,13 @@
 package handler
 
 import (
-	"github.com/lcomrade/md2html"
 	"net/http"
 )
 
-// Markdown page handler
-func mdHand(rw http.ResponseWriter, path string) {
+// HTMLP page handler
+func htmlpHand(rw http.ResponseWriter, path string) {
 	// Read page article
-	pageArticle, err := md2html.ConvertFile(path)
+	pageArticle, err := readFile(path)
 	if err != nil {
 		errWrite(err, rw)
 		return

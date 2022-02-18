@@ -24,7 +24,7 @@ import (
 )
 
 func printVersion() {
-	println("1.0.0")
+	println("1.1.0")
 }
 
 func printHelp() {

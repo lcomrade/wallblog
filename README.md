@@ -6,8 +6,9 @@
 **WallBlog** - lightweight blogging engine with markdown support.
 
 Features:
-- Page formatting in markdown
+- Page formatting in markdown and htmlp
 - Custom page header and footer (in markdown)
+- Custom error pages
 - Custom CSS style
 - HTTP and HTTPS
 
@@ -67,6 +68,7 @@ Default:
 ### `/var/lib/wallblog/*`
 #### Pages and files
 - `**.md` - convert to HTML
+- `**.htmlp` - like markdown, but only supports HTML tags
 - `**/index.md` - works like `index.html`
 - `**` - other files
 

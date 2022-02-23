@@ -20,18 +20,18 @@ package cfg
 
 import (
 	"encoding/json"
+	"errors"
 	"os"
 	"path/filepath"
 	"strings"
-	"errors"
 )
 
 type Config struct {
-	WebRoot string
-	HTTP    ConfigHTTP
-	HTTPS   ConfigHTTPS
+	WebRoot   string
+	HTTP      ConfigHTTP
+	HTTPS     ConfigHTTPS
 	Overwrite ConfigOverwrite
-	SiteMap ConfigSiteMap
+	SiteMap   ConfigSiteMap
 }
 
 type ConfigHTTP struct {
@@ -47,7 +47,7 @@ type ConfigHTTPS struct {
 }
 
 type ConfigOverwrite struct {
-	Host string
+	Host     string
 	Protocol string
 }
 
@@ -72,7 +72,7 @@ func Read(path string) (Config, error) {
 			Key:    "",
 		},
 		Overwrite: ConfigOverwrite{
-			Host: "",
+			Host:     "",
 			Protocol: "",
 		},
 		SiteMap: ConfigSiteMap{

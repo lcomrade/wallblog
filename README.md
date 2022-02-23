@@ -64,7 +64,7 @@ Default:
 	},
 	"Overwrite": {
 		"Host": "",
-		"Protocol": "",
+		"Protocol": ""
 	},
 	"SiteMap": {
 		"Enable": true,

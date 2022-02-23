@@ -41,7 +41,7 @@ func SiteMapHand(rw http.ResponseWriter, req *http.Request) {
 	if Config.HTTPS.Enable == true {
 		protocol = "https"
 	}
-	
+
 	if Config.Overwrite.Protocol != "" {
 		protocol = Config.Overwrite.Protocol
 	}
@@ -106,13 +106,13 @@ func SiteMapHand(rw http.ResponseWriter, req *http.Request) {
 		}
 
 		// Add to site map
-		siteMap = siteMap + "\n<url><loc>" + siteURL + pathURL + "</loc></url>"
+		siteMap = siteMap + "<url><loc>" + siteURL + pathURL + "</loc></url>\n"
 	}
 
 	// Prepate sitemap
 	siteMap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset>` + siteMap + `
-</urlset>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+` + siteMap + `</urlset>
 `
 
 	// Send result

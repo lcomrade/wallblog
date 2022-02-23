@@ -53,6 +53,7 @@ func runServer(configFile string) error {
 
 	// Add handlers
 	http.HandleFunc("/", handler.Hand)
+	http.HandleFunc("/sitemap.xml", handler.SiteMapHand)
 
 	// Print init info
 	println("path: config file:", configFile)

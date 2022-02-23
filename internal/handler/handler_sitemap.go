@@ -28,8 +28,26 @@ import (
 
 // Provides a dynamically generated sitemap
 func SiteMapHand(rw http.ResponseWriter, req *http.Request) {
-	// Get site URL
+	// Get host
 	host := req.Host
+
+	if Config.Overwrite.Host != "" {
+		host = Config.Overwrite.Host
+	}
+
+	// Get protocol
+	protocol := "http"
+
+	if Config.HTTPS.Enable == true {
+		protocol = "https"
+	}
+	
+	if Config.Overwrite.Protocol != "" {
+		protocol = Config.Overwrite.Protocol
+	}
+
+	// Get site URL
+	siteURL := protocol + "://" + host
 
 	// Get file list
 	fileList := getAllFiles(Config.WebRoot)
@@ -88,7 +106,7 @@ func SiteMapHand(rw http.ResponseWriter, req *http.Request) {
 		}
 
 		// Add to site map
-		siteMap = siteMap + "\n<url><loc>" + host + pathURL + "</loc></url>"
+		siteMap = siteMap + "\n<url><loc>" + siteURL + pathURL + "</loc></url>"
 	}
 
 	// Prepate sitemap

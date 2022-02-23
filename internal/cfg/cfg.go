@@ -22,12 +22,15 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"strings"
+	"errors"
 )
 
 type Config struct {
 	WebRoot string
 	HTTP    ConfigHTTP
 	HTTPS   ConfigHTTPS
+	Overwrite ConfigOverwrite
 	SiteMap ConfigSiteMap
 }
 
@@ -41,6 +44,11 @@ type ConfigHTTPS struct {
 	Port   string
 	Cert   string
 	Key    string
+}
+
+type ConfigOverwrite struct {
+	Host string
+	Protocol string
 }
 
 type ConfigSiteMap struct {
@@ -62,6 +70,10 @@ func Read(path string) (Config, error) {
 			Port:   ":443",
 			Cert:   "",
 			Key:    "",
+		},
+		Overwrite: ConfigOverwrite{
+			Host: "",
+			Protocol: "",
 		},
 		SiteMap: ConfigSiteMap{
 			Enable:     true,
@@ -94,6 +106,14 @@ func Read(path string) (Config, error) {
 	// Make web root path absolute
 	config.WebRoot, err = filepath.Abs(config.WebRoot)
 	if err != nil {
+		return config, err
+	}
+
+	// Check over parameters
+	config.Overwrite.Protocol = strings.ToLower(config.Overwrite.Protocol)
+
+	if config.Overwrite.Protocol != "" && config.Overwrite.Protocol != "http" && config.Overwrite.Protocol != "https" {
+		err := errors.New("unknow protocol '" + config.Overwrite.Protocol + "' in Overwrite.Protocol")
 		return config, err
 	}
 

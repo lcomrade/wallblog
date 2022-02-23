@@ -62,6 +62,10 @@ Default:
 		"Cert": "",
 		"Key": ""
 	},
+	"Overwrite": {
+		"Host": "",
+		"Protocol": "",
+	},
 	"SiteMap": {
 		"Enable": true,
 		"URL": "/sitemap.xml",

@@ -74,7 +74,15 @@ Default:
 }
 ```
 
+*Read more about [site map](docs/sitemap.md).*
+
+
 ### `/var/lib/wallblog/*`
+`**.md` files - normal Markdown with support for HTML tags.
+
+`**.htmlp` files - only HTML tags are supported.
+Put there what is usually between `<body></body>`.
+
 #### Pages and files
 - `**.md` - convert to HTML
 - `**.htmlp` - like markdown, but only supports HTML tags
@@ -95,48 +103,9 @@ Default:
 - `./500_unknown.htmlp` or `./500_unknown.md`
 
 
-### Markdown and HTMLP formats
-`**.md` files - normal Markdown with support for HTML tags.
-
-`**.htmlp` files - only HTML tags are supported.
-Put there what is usually between `<body></body>`.
-
-
-## How server renders pages?
-This is the templates by which the server creates pages.
-
-### Page
-```html
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<meta charset='utf-8'>
-		<link rel='stylesheet' type='text/css' href='/style.css'>
-	</head>
-	<body>
-		<header> <!-- header.htmlp or header.md file --> </header>
-		<article> <!-- Requested file --> </article>
-		<footer> <!-- footer.htmlp or footer.md file --> </footer>
-	</body>
-</html>
-```
-
-### Error page
-```html
-<!DOCTYPE HTML>
-<html>
-	<head>
-		<meta charset='utf-8'>
-		<link rel='stylesheet' type='text/css' href='/error.css'>
-	</head>
-	<body>
-		<!-- .htmlp or .md file corresponding to the error code -->
-	</body>
-</html>
-```
-
-
 
 ## 📑Documentation
+- [Config: Site Map](docs/sitemap.md)
+- [FAQ](docs/faq.md)
 - [Changelog](CHANGELOG.md)
 - [MD2HTML: Markdown Syntax Guide](https://github.com/lcomrade/md2html/blob/main/docs/syntax_guide.md)

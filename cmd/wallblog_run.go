@@ -22,7 +22,6 @@ import (
 	"../internal/cfg"
 	"../internal/handler"
 	"net/http"
-	"path/filepath"
 )
 
 // Run HTTP server
@@ -44,20 +43,19 @@ func runServer(configFile string) error {
 	}
 
 	// Set handler config
-	webRoot, err := filepath.Abs(config.WebRoot)
-	if err != nil {
-		return err
-	}
-
-	handler.ServerRoot = webRoot
+	handler.Config = config
 
 	// Add handlers
 	http.HandleFunc("/", handler.Hand)
-	http.HandleFunc("/sitemap.xml", handler.SiteMapHand)
+
+	if config.SiteMap.Enable {
+		http.HandleFunc(config.SiteMap.URL, handler.SiteMapHand)
+	}
 
 	// Print init info
 	println("path: config file:", configFile)
-	println("path: web root:", webRoot)
+	println("path: web root:", config.WebRoot)
+	println("config: site map: enable:", config.SiteMap.Enable)
 
 	// Run server
 	errs := make(chan error, 1)

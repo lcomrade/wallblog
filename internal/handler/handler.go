@@ -19,16 +19,17 @@
 package handler
 
 import (
+	"../cfg"
 	"net/http"
 	"os"
 	"path/filepath"
 )
 
-var ServerRoot string = "."
+var Config cfg.Config
 
 func Hand(rw http.ResponseWriter, req *http.Request) {
 	// Find path
-	path := filepath.Join(ServerRoot, req.URL.Path)
+	path := filepath.Join(Config.WebRoot, req.URL.Path)
 	ext := filepath.Ext(path)
 
 	// Get file info

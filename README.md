@@ -51,6 +51,7 @@ To apply the changes in this file, you must restart the program.
 Default:
 ```json
 {
+	"WebRoot": "/var/lib/wallblog",
 	"HTTP": {
 		"Enable": true,
 		"Port": ":80"
@@ -61,7 +62,11 @@ Default:
 		"Cert": "",
 		"Key": ""
 	},
-	"WebRoot": "/var/lib/wallblog"
+	"SiteMap": {
+		"Enable": true,
+		"URL": "/sitemap.xml",
+		"SkipHidden": true
+	}
 }
 ```
 

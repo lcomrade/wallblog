@@ -43,7 +43,7 @@ func readFile(path string) (string, error) {
 }
 
 func pagePart(nameWithoutExt string) string {
-	basePath := filepath.Join(ServerRoot, nameWithoutExt)
+	basePath := filepath.Join(Config.WebRoot, nameWithoutExt)
 
 	// htmlp file
 	page, err := readFile(basePath + ".htmlp")

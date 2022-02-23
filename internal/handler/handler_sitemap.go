@@ -28,15 +28,34 @@ import (
 
 // Provides a dynamically generated sitemap
 func SiteMapHand(rw http.ResponseWriter, req *http.Request) {
+	// Get site URL
+	host := req.Host
+
 	// Get file list
-	fileList := getAllFiles(ServerRoot)
+	fileList := getAllFiles(Config.WebRoot)
 
 	// Generate sitemap
 	siteMap := ""
 
 	for _, file := range fileList {
-		pathURL := strings.TrimPrefix(file, ServerRoot)
+		pathURL := strings.TrimPrefix(file, Config.WebRoot)
 		pathURL = filepath.Join("/", pathURL)
+
+		// Skip hidden dirs and files
+		if Config.SiteMap.SkipHidden {
+			skip := false
+
+			for _, part := range strings.Split(pathURL, "/") {
+				if strings.HasPrefix(part, ".") {
+					skip = true
+					continue
+				}
+			}
+
+			if skip == true {
+				continue
+			}
+		}
 
 		// Skip by extetion
 		ext := filepath.Ext(pathURL)
@@ -52,6 +71,7 @@ func SiteMapHand(rw http.ResponseWriter, req *http.Request) {
 			"/500_permission_denied.htmlp", "/500_permission_denied.md",
 			"/500_file_read_timeout.htmlp", "/500_file_read_timeout.md",
 			"/500_unknown.htmlp", "/500_unknown.md",
+			"/robots.txt",
 		}
 
 		skip := false
@@ -68,7 +88,7 @@ func SiteMapHand(rw http.ResponseWriter, req *http.Request) {
 		}
 
 		// Add to site map
-		siteMap = siteMap + "\n<url><loc>" + pathURL + "</loc></url>"
+		siteMap = siteMap + "\n<url><loc>" + host + pathURL + "</loc></url>"
 	}
 
 	// Prepate sitemap
@@ -95,7 +115,7 @@ func getAllFiles(path string) []string {
 	for _, file := range files {
 		// If directory
 		if file.IsDir() {
-			newPath := filepath.Join(ServerRoot, file.Name())
+			newPath := filepath.Join(Config.WebRoot, file.Name())
 			result = append(result, getAllFiles(newPath)...)
 
 			// If file

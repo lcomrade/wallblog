@@ -21,12 +21,14 @@ package cfg
 import (
 	"encoding/json"
 	"os"
+	"path/filepath"
 )
 
 type Config struct {
+	WebRoot string
 	HTTP    ConfigHTTP
 	HTTPS   ConfigHTTPS
-	WebRoot string
+	SiteMap ConfigSiteMap
 }
 
 type ConfigHTTP struct {
@@ -41,9 +43,16 @@ type ConfigHTTPS struct {
 	Key    string
 }
 
+type ConfigSiteMap struct {
+	Enable     bool
+	URL        string
+	SkipHidden bool
+}
+
 func Read(path string) (Config, error) {
 	// Default
 	config := Config{
+		WebRoot: "/var/lib/wallblog",
 		HTTP: ConfigHTTP{
 			Enable: true,
 			Port:   ":80",
@@ -54,7 +63,11 @@ func Read(path string) (Config, error) {
 			Cert:   "",
 			Key:    "",
 		},
-		WebRoot: "/var/lib/wallblog",
+		SiteMap: ConfigSiteMap{
+			Enable:     true,
+			URL:        "/sitemap.xml",
+			SkipHidden: true,
+		},
 	}
 
 	// Open file
@@ -74,6 +87,12 @@ func Read(path string) (Config, error) {
 	// Decode config
 	parser := json.NewDecoder(file)
 	err = parser.Decode(&config)
+	if err != nil {
+		return config, err
+	}
+
+	// Make web root path absolute
+	config.WebRoot, err = filepath.Abs(config.WebRoot)
 	if err != nil {
 		return config, err
 	}

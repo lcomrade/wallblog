@@ -1,9 +1,15 @@
 # Changelog
 Semantic versioning is used (https://semver.org/).
 
+## v1.2.0
+- Added automatic sitemap generation
+- Added reverse proxy support
+- Allow use `index.htmlp` as index page
+- Documented sitemap, reverse proxy and FAQ
+
 ## v1.1.0
 - Added custom error pages
-- Added support for HTMLP fromat
+- Added support for HTMLP format
 - Page rendering is documented
 
 ## v1.0.0

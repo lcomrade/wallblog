@@ -19,44 +19,19 @@
 package handler
 
 import (
-	"../cfg"
 	"net/http"
-	"os"
 	"path/filepath"
 )
 
-var Config cfg.Config
-
-func Hand(rw http.ResponseWriter, req *http.Request) {
-	// Find path
-	path := filepath.Join(Config.WebRoot, req.URL.Path)
-	ext := filepath.Ext(path)
-
-	// Get file info
-	file, err := os.Stat(path)
-	if err != nil {
-		errWrite(err, rw)
+func dirHand(rw http.ResponseWriter, path string) {
+	// index.htmlp
+	indexFile := filepath.Join(path, "index.htmlp")
+	if isFileExist(indexFile) {
+		htmlpHand(rw, indexFile)
 		return
 	}
 
-	// Directory
-	if file.IsDir() {
-		dirHand(rw, path)
-		return
-	}
-
-	// *.md file
-	if ext == ".md" {
-		mdHand(rw, path)
-		return
-	}
-
-	// *.htmlp file
-	if ext == ".htmlp" {
-		htmlpHand(rw, path)
-		return
-	}
-
-	// Other files
-	http.ServeFile(rw, req, path)
+	// index.md
+	indexFile = filepath.Join(path, "index.md")
+	mdHand(rw, indexFile)
 }

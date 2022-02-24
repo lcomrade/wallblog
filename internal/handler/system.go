@@ -19,44 +19,37 @@
 package handler
 
 import (
-	"../cfg"
-	"net/http"
+	"io/ioutil"
 	"os"
-	"path/filepath"
 )
 
-var Config cfg.Config
-
-func Hand(rw http.ResponseWriter, req *http.Request) {
-	// Find path
-	path := filepath.Join(Config.WebRoot, req.URL.Path)
-	ext := filepath.Ext(path)
-
-	// Get file info
-	file, err := os.Stat(path)
+func readFile(path string) (string, error) {
+	// Open file
+	file, err := os.Open(path)
 	if err != nil {
-		errWrite(err, rw)
-		return
+		return "", err
+	}
+	defer file.Close()
+
+	// Read file
+	fileByte, err := ioutil.ReadAll(file)
+	if err != nil {
+		return "", err
 	}
 
-	// Directory
+	return string(fileByte), nil
+}
+
+func isFileExist(path string) bool {
+	file, err := os.Stat(path)
+
+	if err != nil {
+		return false
+	}
+
 	if file.IsDir() {
-		dirHand(rw, path)
-		return
+		return false
 	}
 
-	// *.md file
-	if ext == ".md" {
-		mdHand(rw, path)
-		return
-	}
-
-	// *.htmlp file
-	if ext == ".htmlp" {
-		htmlpHand(rw, path)
-		return
-	}
-
-	// Other files
-	http.ServeFile(rw, req, path)
+	return true
 }

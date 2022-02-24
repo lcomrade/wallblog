@@ -20,27 +20,8 @@ package handler
 
 import (
 	"github.com/lcomrade/md2html"
-	"io/ioutil"
-	"os"
 	"path/filepath"
 )
-
-func readFile(path string) (string, error) {
-	// Open file
-	file, err := os.Open(path)
-	if err != nil {
-		return "", err
-	}
-	defer file.Close()
-
-	// Read file
-	fileByte, err := ioutil.ReadAll(file)
-	if err != nil {
-		return "", err
-	}
-
-	return string(fileByte), nil
-}
 
 func pagePart(nameWithoutExt string) string {
 	basePath := filepath.Join(Config.WebRoot, nameWithoutExt)

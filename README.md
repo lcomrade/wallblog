@@ -84,11 +84,10 @@ Default:
 `**.htmlp` files - only HTML tags are supported.
 Put there what is usually between `<body></body>`.
 
+`**` files - serve according to their MIME type.
+
 #### Pages and files
-- `**.md` - convert to HTML
-- `**.htmlp` - like markdown, but only supports HTML tags
-- `**/index.md` - works like `index.html`
-- `**` - other files
+- `**/index.htmlp` or `**/index.md` - works like `index.html`
 
 #### Custom page design
 - `./header.htmlp` or `./header.md` - page header

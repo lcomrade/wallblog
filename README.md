@@ -6,10 +6,11 @@
 **WallBlog** - lightweight blogging engine with markdown support.
 
 Features:
-- Page formatting in markdown and htmlp
+- Page formatting in markdown and html
 - Custom page header and footer (in markdown)
-- Custom error pages
 - Custom CSS style
+- Automatic sitemap generation
+- Custom error pages
 - HTTP and HTTPS
 
 
@@ -106,6 +107,7 @@ Put there what is usually between `<body></body>`.
 
 ## 📑Documentation
 - [Config: Site Map](docs/sitemap.md)
+- [Config: Reverse proxy](docs/reverse_proxy.md)
 - [FAQ](docs/faq.md)
 - [Changelog](CHANGELOG.md)
 - [MD2HTML: Markdown Syntax Guide](https://github.com/lcomrade/md2html/blob/main/docs/syntax_guide.md)

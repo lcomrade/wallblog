@@ -24,6 +24,13 @@ import (
 )
 
 func pageWrite(pageArticle string, rw http.ResponseWriter) {
+	// Page title
+	title := getHtmlHeader(pageArticle)
+	titleHead := ""
+	if title != "" {
+		titleHead = "\n<title>" + title + "</title>"
+	}
+
 	// PAGE HEADER
 	pageHeader := pagePart("header")
 
@@ -35,7 +42,7 @@ func pageWrite(pageArticle string, rw http.ResponseWriter) {
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<meta charset='utf-8'>
+		<meta charset='utf-8'>` + titleHead + `
 		<link rel='stylesheet' type='text/css' href='/style.css'>
 	</head>
 	<body>

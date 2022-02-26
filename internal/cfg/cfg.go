@@ -63,10 +63,9 @@ type ConfigPage struct {
 }
 
 type ConfigPageAutoTitle struct {
-	Enable  bool
-	Prefix  string
-	Sufix   string
-	Default string
+	Enable bool
+	Prefix string
+	Sufix  string
 }
 
 func Read(path string) (Config, error) {
@@ -94,10 +93,9 @@ func Read(path string) (Config, error) {
 		},
 		Page: ConfigPage{
 			AutoTitle: ConfigPageAutoTitle{
-				Enable:  true,
-				Prefix:  "",
-				Sufix:   "",
-				Default: "",
+				Enable: true,
+				Prefix: "",
+				Sufix:  "",
 			},
 		},
 	}

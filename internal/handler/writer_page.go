@@ -23,23 +23,19 @@ import (
 	"net/http"
 )
 
-func pageWrite(pageArticle string, rw http.ResponseWriter) {
+func pageWrite(pageArticle string, rw http.ResponseWriter, req *http.Request) {
 	head := ""
 
 	// Head: Page title
 	if Config.Page.AutoTitle.Enable {
 		title := getHtmlHeader(pageArticle)
-		// If auto generated title is not empty
-		if title != "" {
-			head = head + "\n<title>" + Config.Page.AutoTitle.Prefix + title + Config.Page.AutoTitle.Sufix + "</title>"
 
-			// If auto generated title is empty
-		} else {
-			// If default title exists
-			if Config.Page.AutoTitle.Default != "" {
-				head = head + "\n<title>" + Config.Page.AutoTitle.Default + "</title>"
-			}
+		// If auto generated title is empty
+		if title == "" {
+			title = req.URL.Path
 		}
+
+		head = head + "\n<title>" + Config.Page.AutoTitle.Prefix + title + Config.Page.AutoTitle.Sufix + "</title>"
 	}
 
 	// Body: Page header

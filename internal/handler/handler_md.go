@@ -24,7 +24,7 @@ import (
 )
 
 // Markdown page handler
-func mdHand(rw http.ResponseWriter, path string) {
+func mdHand(rw http.ResponseWriter, req *http.Request, path string) {
 	// Read page article
 	pageArticle, err := md2html.ConvertFile(path)
 	if err != nil {
@@ -33,5 +33,5 @@ func mdHand(rw http.ResponseWriter, path string) {
 	}
 
 	// Send page
-	pageWrite(pageArticle, rw)
+	pageWrite(pageArticle, rw, req)
 }

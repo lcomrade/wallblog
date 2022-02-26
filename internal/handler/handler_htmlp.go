@@ -23,7 +23,7 @@ import (
 )
 
 // HTMLP page handler
-func htmlpHand(rw http.ResponseWriter, path string) {
+func htmlpHand(rw http.ResponseWriter, req *http.Request, path string) {
 	// Read page article
 	pageArticle, err := readFile(path)
 	if err != nil {
@@ -32,5 +32,5 @@ func htmlpHand(rw http.ResponseWriter, path string) {
 	}
 
 	// Send page
-	pageWrite(pageArticle, rw)
+	pageWrite(pageArticle, rw, req)
 }

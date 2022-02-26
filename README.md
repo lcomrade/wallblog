@@ -76,8 +76,7 @@ Default:
 		"AutoTitle": {
 			"Enable": true,
 			"Prefix": "",
-			"Sufix": "",
-			"Default": ""
+			"Sufix": ""
 		}
 	}
 }

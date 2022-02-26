@@ -23,15 +23,15 @@ import (
 	"path/filepath"
 )
 
-func dirHand(rw http.ResponseWriter, path string) {
+func dirHand(rw http.ResponseWriter, req *http.Request, path string) {
 	// index.htmlp
 	indexFile := filepath.Join(path, "index.htmlp")
 	if isFileExist(indexFile) {
-		htmlpHand(rw, indexFile)
+		htmlpHand(rw, req, indexFile)
 		return
 	}
 
 	// index.md
 	indexFile = filepath.Join(path, "index.md")
-	mdHand(rw, indexFile)
+	mdHand(rw, req, indexFile)
 }

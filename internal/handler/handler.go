@@ -41,19 +41,19 @@ func Hand(rw http.ResponseWriter, req *http.Request) {
 
 	// Directory
 	if file.IsDir() {
-		dirHand(rw, path)
+		dirHand(rw, req, path)
 		return
 	}
 
 	// *.md file
 	if ext == ".md" {
-		mdHand(rw, path)
+		mdHand(rw, req, path)
 		return
 	}
 
 	// *.htmlp file
 	if ext == ".htmlp" {
-		htmlpHand(rw, path)
+		htmlpHand(rw, req, path)
 		return
 	}
 

@@ -71,6 +71,14 @@ Default:
 		"Enable": true,
 		"URL": "/sitemap.xml",
 		"SkipHidden": true
+	},
+	"Page": {
+		"AutoTitle": {
+			"Enable": true,
+			"Prefix": "",
+			"Sufix": "",
+			"Default": ""
+		}
 	}
 }
 ```

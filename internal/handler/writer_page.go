@@ -24,17 +24,28 @@ import (
 )
 
 func pageWrite(pageArticle string, rw http.ResponseWriter) {
-	// Page title
-	title := getHtmlHeader(pageArticle)
-	titleHead := ""
-	if title != "" {
-		titleHead = "\n<title>" + title + "</title>"
+	head := ""
+
+	// Head: Page title
+	if Config.Page.AutoTitle.Enable {
+		title := getHtmlHeader(pageArticle)
+		// If auto generated title is not empty
+		if title != "" {
+			head = head + "\n<title>" + Config.Page.AutoTitle.Prefix + title + Config.Page.AutoTitle.Sufix + "</title>"
+
+			// If auto generated title is empty
+		} else {
+			// If default title exists
+			if Config.Page.AutoTitle.Default != "" {
+				head = head + "\n<title>" + Config.Page.AutoTitle.Default + "</title>"
+			}
+		}
 	}
 
-	// PAGE HEADER
+	// Body: Page header
 	pageHeader := pagePart("header")
 
-	// PAGE FOOTER
+	// Body: Page footer
 	pageFooter := pagePart("footer")
 
 	// PAGE
@@ -42,7 +53,7 @@ func pageWrite(pageArticle string, rw http.ResponseWriter) {
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<meta charset='utf-8'>` + titleHead + `
+		<meta charset='utf-8'>` + head + `
 		<link rel='stylesheet' type='text/css' href='/style.css'>
 	</head>
 	<body>

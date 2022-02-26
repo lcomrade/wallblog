@@ -32,6 +32,7 @@ type Config struct {
 	HTTPS     ConfigHTTPS
 	Overwrite ConfigOverwrite
 	SiteMap   ConfigSiteMap
+	Page      ConfigPage
 }
 
 type ConfigHTTP struct {
@@ -57,6 +58,17 @@ type ConfigSiteMap struct {
 	SkipHidden bool
 }
 
+type ConfigPage struct {
+	AutoTitle ConfigPageAutoTitle
+}
+
+type ConfigPageAutoTitle struct {
+	Enable  bool
+	Prefix  string
+	Sufix   string
+	Default string
+}
+
 func Read(path string) (Config, error) {
 	// Default
 	config := Config{
@@ -79,6 +91,14 @@ func Read(path string) (Config, error) {
 			Enable:     true,
 			URL:        "/sitemap.xml",
 			SkipHidden: true,
+		},
+		Page: ConfigPage{
+			AutoTitle: ConfigPageAutoTitle{
+				Enable:  true,
+				Prefix:  "",
+				Sufix:   "",
+				Default: "",
+			},
 		},
 	}
 
@@ -113,7 +133,7 @@ func Read(path string) (Config, error) {
 	config.Overwrite.Protocol = strings.ToLower(config.Overwrite.Protocol)
 
 	if config.Overwrite.Protocol != "" && config.Overwrite.Protocol != "http" && config.Overwrite.Protocol != "https" {
-		err := errors.New("unknow protocol '" + config.Overwrite.Protocol + "' in Overwrite.Protocol")
+		err := errors.New("config: unknow protocol '" + config.Overwrite.Protocol + "' in Overwrite.Protocol")
 		return config, err
 	}
 

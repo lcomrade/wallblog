@@ -82,7 +82,9 @@ Default:
 }
 ```
 
-*Read more about [site map](docs/sitemap.md).*
+Read more about:
+- [page head](docs/page_head.md)
+- [site map](docs/sitemap.md)
 
 
 ### `/var/lib/wallblog/*`
@@ -112,6 +114,7 @@ Put there what is usually between `<body></body>`.
 
 
 ## 📑Documentation
+- [Config: Page Head](docs/page_head.md)
 - [Config: Site Map](docs/sitemap.md)
 - [Config: Reverse proxy](docs/reverse_proxy.md)
 - [FAQ](docs/faq.md)

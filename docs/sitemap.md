@@ -38,7 +38,7 @@ Site map generation settings:
 }
 ```
 
-- `Enable` - disable automatic sitemap generation
+- `Enable` - automatic sitemap generation
 - `URL` - address where the map will be located
 - `SkipHidden` - skip files and dirs that begin with `.`
 

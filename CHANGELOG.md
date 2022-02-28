@@ -1,6 +1,10 @@
 # Changelog
 Semantic versioning is used (https://semver.org/).
 
+## v1.3.0
+- Added automatic page title generation
+- Allowed to add additional tags to `<head>...</head>`
+
 ## v1.2.0
 - Added automatic sitemap generation
 - Added reverse proxy support

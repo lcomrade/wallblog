@@ -77,7 +77,8 @@ Default:
 			"Enable": true,
 			"Prefix": "",
 			"Sufix": ""
-		}
+		},
+		"AddToHead": []
 	}
 }
 ```

@@ -38,6 +38,11 @@ func pageWrite(pageArticle string, rw http.ResponseWriter, req *http.Request) {
 		head = head + "\n<title>" + Config.Page.AutoTitle.Prefix + title + Config.Page.AutoTitle.Sufix + "</title>"
 	}
 
+	// Head: Other
+	for _, part := range Config.Page.AddToHead {
+		head = head + "\n" + part
+	}
+
 	// Body: Page header
 	pageHeader := pagePart("header")
 

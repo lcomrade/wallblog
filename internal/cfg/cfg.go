@@ -60,6 +60,7 @@ type ConfigSiteMap struct {
 
 type ConfigPage struct {
 	AutoTitle ConfigPageAutoTitle
+	AddToHead []string
 }
 
 type ConfigPageAutoTitle struct {
@@ -97,6 +98,7 @@ func Read(path string) (Config, error) {
 				Prefix: "",
 				Sufix:  "",
 			},
+			AddToHead: []string{},
 		},
 	}
 

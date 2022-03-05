@@ -1,6 +1,9 @@
 # Changelog
 Semantic versioning is used (https://semver.org/).
 
+## v1.3.1
+- Fix: HTML tags in autotitle
+
 ## v1.3.0
 - Added automatic page title generation
 - Allowed to add additional tags to `<head>...</head>`

@@ -27,6 +27,7 @@ func getHtmlHeader(htmlText string) string {
 
 	var skip int = 0
 	var hTagPart int = 0 // 1(<h1), 2(>), 3(title)
+	var otherTagOpen bool = false
 
 	for i := range textRune {
 		// Skip
@@ -79,7 +80,23 @@ func getHtmlHeader(htmlText string) string {
 			// Exit
 			if char+nextChar+nextNextChar+nextNextNextChar+nextNextNextNextChar == "</h1>" {
 				return title
+			}
 
+			// Other tag open
+			if char == "<" {
+				otherTagOpen = true
+				continue
+			}
+
+			// Other tag close
+			if char == ">" {
+				otherTagOpen = false
+				continue
+			}
+
+			// If other tag
+			if otherTagOpen == true {
+				continue
 			}
 
 			// Read title

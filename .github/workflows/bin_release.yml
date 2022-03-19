@@ -21,11 +21,12 @@ jobs:
         with:
           go-version: '1.15.15'
 
-      - name: Install Go dependencies
-        run: go get github.com/lcomrade/md2html
-
-      - name: Make
-        run: make release
+      - name: Build
+        run: |-
+          export GOPATH="$HOME/go"
+          mkdir -p $GOPATH/github.com/lcomrade/
+          ln -s . $GOPATH/github.com/lcomrade/wallblog
+          make release
 
       - name: Upload release binaries
         uses: alexellis/upload-assets@0.2.2

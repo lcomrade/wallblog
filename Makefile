@@ -1,5 +1,5 @@
 NAME = wallblog
-MAIN_GO = ./cmd/$(NAME)*
+MAIN_GO = ./cmd/*.go
 LDFLAGS = -w -s
 
 all:

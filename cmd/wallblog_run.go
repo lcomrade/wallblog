@@ -19,8 +19,8 @@
 package main
 
 import (
-	"../internal/cfg"
-	"../internal/handler"
+	"github.com/lcomrade/wallblog/internal/cfg"
+	"github.com/lcomrade/wallblog/internal/handler"
 	"net/http"
 )
 

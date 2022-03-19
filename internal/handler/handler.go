@@ -19,7 +19,7 @@
 package handler
 
 import (
-	"../cfg"
+	"github.com/lcomrade/wallblog/internal/cfg"
 	"net/http"
 	"os"
 	"path/filepath"

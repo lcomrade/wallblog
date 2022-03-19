@@ -19,7 +19,7 @@
 package handler
 
 import (
-	"github.com/lcomrade/md2html"
+	"github.com/lcomrade/md2html/v2"
 	"path/filepath"
 )
 

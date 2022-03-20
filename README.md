@@ -37,7 +37,6 @@ Build deps:
 ```bash
 git clone https://github.com/lcomrade/wallblog.git
 cd ./wallblog
-go get github.com/lcomrade/md2html
 make
 ```
 

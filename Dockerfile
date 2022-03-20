@@ -7,11 +7,6 @@ RUN apk update && apk upgrade && apk add --no-cache make git
 
 COPY . ./
 
-ENV GOPATH="/root/go"
-RUN \
-mkdir -p $GOPATH/github.com/lcomrade/ && \
-ln -s . $GOPATH/github.com/lcomrade/wallblog
-
 RUN make
 
 

@@ -77,7 +77,8 @@ Default:
 			"Prefix": "",
 			"Sufix": ""
 		},
-		"AddToHead": []
+		"AddToHead": [],
+		"EnableBuiltInVars": true
 	}
 }
 ```
@@ -116,7 +117,7 @@ Put there what is usually between `<body></body>`.
 
 
 ## 📑Documentation
-- [How server renders pages?](docs/faq.md#how-server-renders-pages)
+- [Article/Error pages](docs/page.md)
 - [Config: Page Head](docs/page_head.md)
 - [Config: Site Map](docs/sitemap.md)
 - [Config: Reverse proxy](docs/reverse_proxy.md)

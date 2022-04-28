@@ -35,7 +35,7 @@ func Hand(rw http.ResponseWriter, req *http.Request) {
 	// Get file info
 	file, err := os.Stat(path)
 	if err != nil {
-		errWrite(err, rw)
+		errWrite(err, rw, req)
 		return
 	}
 

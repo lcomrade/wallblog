@@ -59,8 +59,9 @@ type ConfigSiteMap struct {
 }
 
 type ConfigPage struct {
-	AutoTitle ConfigPageAutoTitle
-	AddToHead []string
+	AutoTitle         ConfigPageAutoTitle
+	AddToHead         []string
+	EnableBuiltInVars bool
 }
 
 type ConfigPageAutoTitle struct {
@@ -98,7 +99,8 @@ func Read(path string) (Config, error) {
 				Prefix: "",
 				Sufix:  "",
 			},
-			AddToHead: []string{},
+			AddToHead:         []string{},
+			EnableBuiltInVars: true,
 		},
 	}
 
@@ -129,12 +131,16 @@ func Read(path string) (Config, error) {
 		return config, err
 	}
 
-	// Check over parameters
+	// Check overwrite parameters
 	config.Overwrite.Protocol = strings.ToLower(config.Overwrite.Protocol)
 
 	if config.Overwrite.Protocol != "" && config.Overwrite.Protocol != "http" && config.Overwrite.Protocol != "https" {
 		err := errors.New("config: unknow protocol '" + config.Overwrite.Protocol + "' in Overwrite.Protocol")
 		return config, err
+	}
+
+	if strings.HasSuffix(config.Overwrite.Host, "/") == true {
+		config.Overwrite.Host = strings.TrimSuffix(config.Overwrite.Host, "/")
 	}
 
 	return config, nil

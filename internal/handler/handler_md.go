@@ -28,7 +28,7 @@ func mdHand(rw http.ResponseWriter, req *http.Request, path string) {
 	// Read page article
 	pageArticle, err := md2html.ConvertFile(path)
 	if err != nil {
-		errWrite(err, rw)
+		errWrite(err, rw, req)
 		return
 	}
 

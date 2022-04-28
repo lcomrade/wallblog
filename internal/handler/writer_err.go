@@ -24,7 +24,7 @@ import (
 	"os"
 )
 
-func errWrite(err error, rw http.ResponseWriter) {
+func errWrite(err error, rw http.ResponseWriter, req *http.Request) {
 	var httpCode int
 	var errName string
 	var errDesc string
@@ -60,7 +60,7 @@ func errWrite(err error, rw http.ResponseWriter) {
 	}
 
 	// Custom page
-	pageBody := pagePart(customPageFile)
+	pageBody := pagePart(customPageFile, req)
 
 	// Default page
 	if pageBody == "" {

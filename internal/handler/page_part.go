@@ -20,22 +20,33 @@ package handler
 
 import (
 	"github.com/lcomrade/md2html/v2"
+	"net/http"
 	"path/filepath"
+	"strings"
 )
 
-func pagePart(nameWithoutExt string) string {
+func replaceBuiltInVars(text string, req *http.Request) string {
+	siteURL := Config.Overwrite.Protocol + "://" + Config.Overwrite.Host
+
+	text = strings.Replace(text, "{{URL.Path}}", req.URL.Path, -1)
+	text = strings.Replace(text, "{{URL.Full}}", siteURL+req.URL.Path, -1)
+
+	return text
+}
+
+func pagePart(nameWithoutExt string, req *http.Request) string {
 	basePath := filepath.Join(Config.WebRoot, nameWithoutExt)
 
 	// htmlp file
 	page, err := readFile(basePath + ".htmlp")
 	if err == nil {
-		return page
+		return replaceBuiltInVars(page, req)
 	}
 
 	// md file
 	page, err = md2html.ConvertFile(basePath + ".md")
 	if err == nil {
-		return page
+		return replaceBuiltInVars(page, req)
 	}
 
 	// Not found

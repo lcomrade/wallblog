@@ -2,8 +2,12 @@ github.com/lcomrade/highlight v1.0.0 h1:4AedfhU/sRF6kooDkrsAeNVVUTbASkeHQylnj+1U
 github.com/lcomrade/highlight v1.0.0/go.mod h1:J6QdV+WeR7DF5i2AVx03BsQziTLz7lSjbxlm5TAOuzQ=
 github.com/lcomrade/highlight v1.0.1 h1:+jvierMVAYtXVQ88I8wJxdWrAujW7Z0BrhzYI45ct7Y=
 github.com/lcomrade/highlight v1.0.1/go.mod h1:J6QdV+WeR7DF5i2AVx03BsQziTLz7lSjbxlm5TAOuzQ=
+github.com/lcomrade/highlight v1.0.2 h1:pWLJSEj8f1PFOfS8iHb8KhJ1f+G2UjOzWW34mCd6NJE=
+github.com/lcomrade/highlight v1.0.2/go.mod h1:J6QdV+WeR7DF5i2AVx03BsQziTLz7lSjbxlm5TAOuzQ=
 github.com/lcomrade/md2html v2.1.1+incompatible/go.mod h1:ayRlo/72segWSazvawKpHg2dkX8U4ZROFG6Cf5sCSzo=
 github.com/lcomrade/md2html/v2 v2.1.1 h1:8Jrn0KTcYCg3jGpS6NkitzpS9vkLmDeMJJxWEEfvKgI=
 github.com/lcomrade/md2html/v2 v2.1.1/go.mod h1:EfiaIYKeqqQ+CR7O+CdxS6F212rstu/zxpmNS7NQNec=
 github.com/lcomrade/md2html/v2 v2.1.2 h1:yFgtjky/iJWrWm621ui8t+TUm7QXSlwMQeqjdOqTZcQ=
 github.com/lcomrade/md2html/v2 v2.1.2/go.mod h1:6Sz/qaFj2aVEsY4MHU4a1qHVlsAXU0S1W/5HU6fn7So=
+github.com/lcomrade/md2html/v2 v2.1.4 h1:6+1Yc5Ev3r3Qp9nv1Ua9i/ddDA3jDpbWDWqGPBrDEgg=
+github.com/lcomrade/md2html/v2 v2.1.4/go.mod h1:ALEtRK4cvh0D5siJQtV6qYik7k67oWp6SVAdluw35c0=

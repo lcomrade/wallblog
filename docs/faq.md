@@ -22,7 +22,11 @@ Page:
 	</head>
 	<body>
 		<header> <!-- header.htmlp or header.md file --> </header>
-		<article> <!-- Requested file --> </article>
+		<article>
+			<!-- article_start.htmlp or article_start.md file -->
+			<!-- Requested file -->
+			<!-- article_end.htmlp or article_end.md file -->
+		</article>
 		<footer> <!-- footer.htmlp or footer.md file --> </footer>
 	</body>
 </html>

@@ -43,6 +43,12 @@ func pageWrite(pageArticle string, rw http.ResponseWriter, req *http.Request) {
 		head = head + "\n" + part
 	}
 
+	// Body: Page article start
+	pageArticleStart := pagePart("article_start")
+
+	// Body: Page article end
+	pageArticleEnd := pagePart("article_end")
+
 	// Body: Page header
 	pageHeader := pagePart("header")
 
@@ -59,7 +65,7 @@ func pageWrite(pageArticle string, rw http.ResponseWriter, req *http.Request) {
 	</head>
 	<body>
 		<header>` + pageHeader + `</header>
-		<article>` + pageArticle + `</article>
+		<article>` + pageArticleStart + pageArticle + pageArticleEnd + `</article>
 		<footer>` + pageFooter + `</footer>
 	</body>
 </html>

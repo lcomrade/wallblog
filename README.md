@@ -99,6 +99,8 @@ Put there what is usually between `<body></body>`.
 - `**/index.htmlp` or `**/index.md` - works like `index.html`
 
 #### Custom page design
+- `./article_start.htmlp` or `./article_start.md` - custom beginning of the article
+- `./article_end.htmlp` or `./article_end.md` - custom end of article
 - `./header.htmlp` or `./header.md` - page header
 - `./footer.htmlp` or `./footer.md` - page footer
 - `./style.css` - page CSS style
@@ -114,6 +116,7 @@ Put there what is usually between `<body></body>`.
 
 
 ## 📑Documentation
+- [How server renders pages?](docs/faq.md#how-server-renders-pages)
 - [Config: Page Head](docs/page_head.md)
 - [Config: Site Map](docs/sitemap.md)
 - [Config: Reverse proxy](docs/reverse_proxy.md)

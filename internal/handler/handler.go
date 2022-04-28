@@ -27,6 +27,17 @@ import (
 
 var Config cfg.Config
 
+var noAccessURLs = []string{
+	"/article_start.htmlp", "article_start.md",
+	"/article_end.htmlp", "article_end.md",
+	"/header.htmlp", "/header.md",
+	"/footer.htmlp", "/footer.md",
+	"/404.htmlp", "/404.md",
+	"/500_permission_denied.htmlp", "/500_permission_denied.md",
+	"/500_file_read_timeout.htmlp", "/500_file_read_timeout.md",
+	"/500_unknown.htmlp", "/500_unknown.md",
+}
+
 func Hand(rw http.ResponseWriter, req *http.Request) {
 	// Find path
 	path := filepath.Join(Config.WebRoot, req.URL.Path)

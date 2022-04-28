@@ -28,26 +28,8 @@ import (
 
 // Provides a dynamically generated sitemap
 func SiteMapHand(rw http.ResponseWriter, req *http.Request) {
-	// Get host
-	host := req.Host
-
-	if Config.Overwrite.Host != "" {
-		host = Config.Overwrite.Host
-	}
-
-	// Get protocol
-	protocol := "http"
-
-	if Config.HTTPS.Enable == true {
-		protocol = "https"
-	}
-
-	if Config.Overwrite.Protocol != "" {
-		protocol = Config.Overwrite.Protocol
-	}
-
 	// Get site URL
-	siteURL := protocol + "://" + host
+	siteURL := getSiteURL(req)
 
 	// Get file list
 	fileList := getAllFiles(Config.WebRoot)
@@ -81,20 +63,15 @@ func SiteMapHand(rw http.ResponseWriter, req *http.Request) {
 			continue
 		}
 
-		// Skip config files
-		skipURLs := []string{
-			"/header.htmlp", "/header.md",
-			"/footer.htmlp", "/footer.md",
-			"/404.htmlp", "/404.md",
-			"/500_permission_denied.htmlp", "/500_permission_denied.md",
-			"/500_file_read_timeout.htmlp", "/500_file_read_timeout.md",
-			"/500_unknown.htmlp", "/500_unknown.md",
-			"/robots.txt",
+		// Skip robots.txt
+		if pathURL == "/robots.txt" {
+			continue
 		}
 
+		// Skip config files
 		skip := false
 
-		for _, skipURL := range skipURLs {
+		for _, skipURL := range noAccessURLs {
 			if pathURL == skipURL {
 				skip = true
 				continue

@@ -19,34 +19,41 @@
 package handler
 
 import (
-	"github.com/lcomrade/md2html/v2"
 	"net/http"
-	"path/filepath"
 	"strings"
 )
 
-func replaceBuiltInVars(text string, req *http.Request) string {
-	text = strings.Replace(text, "{{URL.Path}}", req.URL.Path, -1)
-	text = strings.Replace(text, "{{URL.Full}}", getFullURL(req), -1)
+func getSiteURL(req *http.Request) string {
+	var protocol string
+	var host string
 
-	return text
+	// Get
+	if strings.HasSuffix(req.URL.Host, ":80") {
+		protocol = "http"
+		host = strings.TrimSuffix(req.URL.Host, ":80")
+
+	} else if strings.HasSuffix(req.URL.Host, ":443") {
+		protocol = "https"
+		host = strings.TrimSuffix(req.URL.Host, ":443")
+
+	} else {
+		protocol = "http"
+		host = req.URL.Host
+	}
+
+	// Use overwrite settings
+	if Config.Overwrite.Protocol != "" {
+		protocol = Config.Overwrite.Protocol
+	}
+
+	if Config.Overwrite.Host != "" {
+		host = Config.Overwrite.Host
+	}
+
+	// Return
+	return protocol + "://" + host
 }
 
-func pagePart(nameWithoutExt string, req *http.Request) string {
-	basePath := filepath.Join(Config.WebRoot, nameWithoutExt)
-
-	// htmlp file
-	page, err := readFile(basePath + ".htmlp")
-	if err == nil {
-		return replaceBuiltInVars(page, req)
-	}
-
-	// md file
-	page, err = md2html.ConvertFile(basePath + ".md")
-	if err == nil {
-		return replaceBuiltInVars(page, req)
-	}
-
-	// Not found
-	return ""
+func getFullURL(req *http.Request) string {
+	return getSiteURL(req) + req.URL.Path
 }

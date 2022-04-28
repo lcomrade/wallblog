@@ -74,7 +74,7 @@ func SiteMapHand(rw http.ResponseWriter, req *http.Request) {
 		for _, skipURL := range noAccessURLs {
 			if pathURL == skipURL {
 				skip = true
-				continue
+				break
 			}
 		}
 

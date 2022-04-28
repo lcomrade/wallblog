@@ -30,8 +30,14 @@ func errWrite(err error, rw http.ResponseWriter, req *http.Request) {
 	var errDesc string
 	var customPageFile string
 
-	// File not exist
-	if os.IsNotExist(err) {
+	if err == errHttpCode403 {
+		httpCode = 403
+		errName = "403 Forbidden"
+		errDesc = "Permission denied"
+		customPageFile = "403"
+
+		// File not exist
+	} else if os.IsNotExist(err) {
 		httpCode = 404
 		errName = "404 Not found"
 		errDesc = "File not exist"

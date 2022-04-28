@@ -19,11 +19,14 @@
 package handler
 
 import (
+	"errors"
 	"github.com/lcomrade/wallblog/internal/cfg"
 	"net/http"
 	"os"
 	"path/filepath"
 )
+
+var errHttpCode403 = errors.New("http code: 403 Forbidden")
 
 var Config cfg.Config
 
@@ -32,6 +35,7 @@ var noAccessURLs = []string{
 	"/article_end.htmlp", "article_end.md",
 	"/header.htmlp", "/header.md",
 	"/footer.htmlp", "/footer.md",
+	"/403.htmlp", "/403.md",
 	"/404.htmlp", "/404.md",
 	"/500_permission_denied.htmlp", "/500_permission_denied.md",
 	"/500_file_read_timeout.htmlp", "/500_file_read_timeout.md",
@@ -40,8 +44,17 @@ var noAccessURLs = []string{
 
 func Hand(rw http.ResponseWriter, req *http.Request) {
 	// Find path
+	url := req.URL.Path
 	path := filepath.Join(Config.WebRoot, req.URL.Path)
 	ext := filepath.Ext(path)
+
+	// Skip URLs
+	for _, skipURL := range noAccessURLs {
+		if url == skipURL {
+			errWrite(errHttpCode403, rw, req)
+			return
+		}
+	}
 
 	// Get file info
 	file, err := os.Stat(path)

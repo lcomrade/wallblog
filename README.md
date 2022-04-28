@@ -109,6 +109,7 @@ Put there what is usually between `<body></body>`.
 
 #### Custom error pages
 - `./error.css` - error page CSS style
+- `./403.htmlp` or `./403.md`
 - `./404.htmlp` or `./404.md`
 - `./500_permission_denied.htmlp` or `./500_permission_denied.md`
 - `./500_file_read_timeout.htmlp` or `./500_file_read_timeout.md`

@@ -40,3 +40,5 @@ Error page:
 | -------------- | -----------------------------------------| ----------------------------------- |
 | `{{URL.Path}}` | Path without a domain name and protocol. | `/kb/my_page.md`                    |
 | `{{URL.Full}}` | Full path with domain name and protocol. | `https://example.org/kb/my_page.md` |
+
+If you want to escape built in variable, you do this: `\{{\{MY_VAR\}\}`.

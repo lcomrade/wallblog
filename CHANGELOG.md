@@ -1,6 +1,13 @@
 # Changelog
 Semantic versioning is used (https://semver.org/).
 
+## v1.3.2
+- Added `article_start` and `article_end`
+- Added build in variables (`{{URL.Full}}` and `{{URL.Path}}`)
+- Disallow access to config files. Now return 403 HTTP code.
+- Fix: site URL detection
+- Update Golang 1.15.15 => 1.18.1
+
 ## v1.3.1
 - Fix: HTML tags in autotitle
 

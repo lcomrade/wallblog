@@ -32,7 +32,7 @@ Read more on the [Docker Hub page](https://hub.docker.com/r/lcomrade/wallblog).
 Build deps:
 - Git
 - GNU Make
-- Golang <= 1.15
+- Golang
 
 ```bash
 git clone https://github.com/lcomrade/wallblog.git
@@ -82,10 +82,6 @@ Default:
 	}
 }
 ```
-
-Read more about:
-- [page head](docs/page_head.md)
-- [site map](docs/sitemap.md)
 
 
 ### `/var/lib/wallblog/*`

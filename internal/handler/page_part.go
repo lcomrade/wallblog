@@ -29,6 +29,9 @@ func replaceBuiltInVars(text string, req *http.Request) string {
 	text = strings.Replace(text, "{{URL.Path}}", req.URL.Path, -1)
 	text = strings.Replace(text, "{{URL.Full}}", getFullURL(req), -1)
 
+	text = strings.Replace(text, `\{`, "{", -1)
+	text = strings.Replace(text, `\}`, "}", -1)
+
 	return text
 }
 

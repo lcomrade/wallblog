@@ -24,6 +24,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 var errHttpCode403 = errors.New("http code: 403 Forbidden")
@@ -54,6 +55,28 @@ func Hand(rw http.ResponseWriter, req *http.Request) {
 			errWrite(errHttpCode403, rw, req)
 			return
 		}
+	}
+
+	// Redirect
+	if strings.HasSuffix(url, "/index.html") {
+		urlRune := []rune(url)
+		newURL := string(urlRune[0:len(urlRune)-11]) + "/"
+		redirectWrite(newURL, rw, req)
+		return
+	}
+
+	if strings.HasSuffix(url, "/index.htmlp") {
+		urlRune := []rune(url)
+		newURL := string(urlRune[0:len(urlRune)-12]) + "/"
+		redirectWrite(newURL, rw, req)
+		return
+	}
+
+	if strings.HasSuffix(url, "/index.md") {
+		urlRune := []rune(url)
+		newURL := string(urlRune[0:len(urlRune)-9]) + "/"
+		redirectWrite(newURL, rw, req)
+		return
 	}
 
 	// Get file info

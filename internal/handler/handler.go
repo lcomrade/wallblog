@@ -44,9 +44,25 @@ var noAccessURLs = []string{
 }
 
 func Hand(rw http.ResponseWriter, req *http.Request) {
+	// Sanitize URL
+	splitOrigURL := strings.Split(req.URL.Path, "/")
+	req.URL.Path = ""
+
+	for _, part := range splitOrigURL {
+		if part == "." {
+			continue
+		}
+
+		if part == ".." {
+			continue
+		}
+
+		req.URL.Path = req.URL.Path + "/" + part
+	}
+
 	// Find path
 	url := req.URL.Path
-	path := filepath.Join(Config.WebRoot, req.URL.Path)
+	path := filepath.Join(Config.WebRoot, url)
 	ext := filepath.Ext(path)
 
 	// Skip URLs
@@ -105,5 +121,5 @@ func Hand(rw http.ResponseWriter, req *http.Request) {
 	}
 
 	// Other files
-	http.ServeFile(rw, req, path)
+	fileHand(rw, req, path)
 }

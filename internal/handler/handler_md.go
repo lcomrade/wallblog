@@ -25,13 +25,21 @@ import (
 
 // Markdown page handler
 func mdHand(rw http.ResponseWriter, req *http.Request, path string) {
-	// Read page article
-	pageArticle, err := md2html.ConvertFile(path)
+	// Read file
+	page, err := readFile(path)
 	if err != nil {
 		errWrite(err, rw, req)
 		return
 	}
 
+	// Template mode
+	if Config.Page.EnableTemplateMode == true {
+		page = useTemplate(page, req)
+	}
+
+	// Parse Markdown
+	page = md2html.Convert(page)
+
 	// Send page
-	pageWrite(pageArticle, rw, req)
+	pageWrite(page, rw, req)
 }

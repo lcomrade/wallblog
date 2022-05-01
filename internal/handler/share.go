@@ -20,25 +20,19 @@ package handler
 
 import (
 	"net/http"
-	"strings"
 )
 
 func getSiteURL(req *http.Request) string {
-	var protocol string
-	var host string
+	protocol := "http"
+	port := req.URL.Port()
+	hostname := req.URL.Hostname()
 
-	// Get
-	if strings.HasSuffix(req.URL.Host, ":80") {
-		protocol = "http"
-		host = strings.TrimSuffix(req.URL.Host, ":80")
-
-	} else if strings.HasSuffix(req.URL.Host, ":443") {
+	if port == "443" {
 		protocol = "https"
-		host = strings.TrimSuffix(req.URL.Host, ":443")
+	}
 
-	} else {
-		protocol = "http"
-		host = req.URL.Host
+	if hostname == "" {
+		hostname = "localhost"
 	}
 
 	// Use overwrite settings
@@ -47,11 +41,11 @@ func getSiteURL(req *http.Request) string {
 	}
 
 	if Config.Overwrite.Host != "" {
-		host = Config.Overwrite.Host
+		hostname = Config.Overwrite.Host
 	}
 
 	// Return
-	return protocol + "://" + host
+	return protocol + "://" + hostname
 }
 
 func getFullURL(req *http.Request) string {

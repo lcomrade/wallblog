@@ -44,9 +44,13 @@ var noAccessURLs = []string{
 }
 
 func Hand(rw http.ResponseWriter, req *http.Request) {
+	if req.Host != "" {
+		req.URL.Host = req.Host
+	}
+
 	// Sanitize URL
 	splitOrigURL := strings.Split(req.URL.Path, "/")
-	req.URL.Path = ""
+	req.URL.Path = "/"
 
 	for _, part := range splitOrigURL {
 		if part == "." {
@@ -57,7 +61,12 @@ func Hand(rw http.ResponseWriter, req *http.Request) {
 			continue
 		}
 
-		req.URL.Path = req.URL.Path + "/" + part
+		if req.URL.Path != "/" {
+			req.URL.Path = req.URL.Path + "/" + part
+
+		} else {
+			req.URL.Path = "/" + part
+		}
 	}
 
 	// Find path

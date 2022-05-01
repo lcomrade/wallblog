@@ -19,16 +19,49 @@
 package handler
 
 import (
+	"bytes"
 	"github.com/lcomrade/md2html/v2"
 	"net/http"
 	"path/filepath"
 	"strings"
+	"text/template"
 )
 
-func replaceBuiltInVars(text string, req *http.Request) string {
-	text = strings.Replace(text, "{{URL.Path}}", req.URL.Path, -1)
-	text = strings.Replace(text, "{{URL.Full}}", getFullURL(req), -1)
+type templateData struct {
+	URL templateDataURL
+}
 
+type templateDataURL struct {
+	Path string
+	Full string
+}
+
+func useTemplate(text string, req *http.Request) string {
+	// Prepare template data
+	tmplData := templateData{
+		URL: templateDataURL{
+			Path: req.URL.Path,
+			Full: getFullURL(req),
+		},
+	}
+
+	// New template
+	tmpl, err := template.New("Template").Parse(text)
+	if err != nil {
+		return text
+	}
+
+	// Execute template
+	var buffer bytes.Buffer
+
+	err = tmpl.Execute(&buffer, tmplData)
+	if err != nil {
+		return text
+	}
+
+	text = buffer.String()
+
+	// Escape
 	text = strings.Replace(text, `\{`, "{", -1)
 	text = strings.Replace(text, `\}`, "}", -1)
 
@@ -41,13 +74,25 @@ func pagePart(nameWithoutExt string, req *http.Request) string {
 	// htmlp file
 	page, err := readFile(basePath + ".htmlp")
 	if err == nil {
-		return replaceBuiltInVars(page, req)
+		// Template mode
+		if Config.Page.EnableTemplateMode == true {
+			page = useTemplate(page, req)
+		}
+
+		// Return
+		return page
 	}
 
 	// md file
-	page, err = md2html.ConvertFile(basePath + ".md")
+	page, err = readFile(basePath + ".md")
 	if err == nil {
-		return replaceBuiltInVars(page, req)
+		// Template mode
+		if Config.Page.EnableTemplateMode == true {
+			page = useTemplate(page, req)
+		}
+
+		// Return
+		return md2html.Convert(page)
 	}
 
 	// Not found

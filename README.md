@@ -78,7 +78,7 @@ Default:
 			"Sufix": ""
 		},
 		"AddToHead": [],
-		"EnableBuiltInVars": true
+		"EnableTemplateMode": true
 	}
 }
 ```

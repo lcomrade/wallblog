@@ -59,9 +59,9 @@ type ConfigSiteMap struct {
 }
 
 type ConfigPage struct {
-	AutoTitle         ConfigPageAutoTitle
-	AddToHead         []string
-	EnableBuiltInVars bool
+	AutoTitle          ConfigPageAutoTitle
+	AddToHead          []string
+	EnableTemplateMode bool
 }
 
 type ConfigPageAutoTitle struct {
@@ -99,8 +99,8 @@ func Read(path string) (Config, error) {
 				Prefix: "",
 				Sufix:  "",
 			},
-			AddToHead:         []string{},
-			EnableBuiltInVars: true,
+			AddToHead:          []string{},
+			EnableTemplateMode: true,
 		},
 	}
 

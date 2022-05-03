@@ -53,20 +53,18 @@ func runServer(configFile string) error {
 	}
 
 	// Print init info
-	println("path: config file:", configFile)
-	println("path: web root:", config.WebRoot)
-	println("config: site map: enable:", config.SiteMap.Enable)
+	println("Config file:", configFile)
 
 	// Run server
 	errs := make(chan error, 1)
 
 	if config.HTTP.Enable {
-		println("run: http:", config.HTTP.Port)
+		println("HTTP server:", config.HTTP.Port)
 		serveHTTP(config.HTTP.Port, errs)
 	}
 
 	if config.HTTPS.Enable {
-		println("run: https:", config.HTTP.Port)
+		println("HTTPS server:", config.HTTP.Port)
 		serveHTTPS(config.HTTPS.Port, config.HTTPS.Cert, config.HTTPS.Key, errs)
 	}
 

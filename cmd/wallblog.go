@@ -23,17 +23,12 @@ import (
 	"os"
 )
 
-func printVersion() {
-	println("1.3.0")
-}
-
 func printHelp() {
 	println("Usage:", os.Args[0], "[OPTION]...")
 	println("Lightweight blogging engine with markdown support.")
 	println("")
 	println("-config   path to config file")
 	println("-help     display this help and exit")
-	println("-version  output version information and exit")
 }
 
 func main() {
@@ -42,19 +37,12 @@ func main() {
 
 	flagConfig := flag.String("config", "/etc/wallblog/config.json", "")
 	flagHelp := flag.Bool("help", false, "")
-	flagVersion := flag.Bool("version", false, "")
 
 	flag.Parse()
 
 	// -help flag
 	if *flagHelp == true {
 		printHelp()
-		os.Exit(0)
-	}
-
-	// -version flag
-	if *flagVersion == true {
-		printVersion()
 		os.Exit(0)
 	}
 

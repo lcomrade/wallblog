@@ -32,7 +32,7 @@ func htmlpHand(rw http.ResponseWriter, req *http.Request, path string) {
 	}
 
 	// Template mode
-	if Config.Page.EnableTemplateMode == true {
+	if Config.Page.TemplateMode.EnableForMainPage == true {
 		page = useTemplate(page, req)
 	}
 

@@ -36,9 +36,17 @@ Error page:
 
 
 ## Template mode
-| Varible         |  Description                              | Example                             |
-| --------------- | ------------------------------------------| ----------------------------------- |
-| `{{.URL.Path}}` | Path without a domain name and protocol. | `/kb/my_page.md`                    |
-| `{{.URL.Full}}` | Full path with domain name and protocol. | `https://example.org/kb/my_page.md` |
+| Varible                              | Example                                                              |
+| ------------------------------------ | -------------------------------------------------------------------- |
+| `{{.Request.ClientIP}}`              | `172.17.0.1`                                                         |
+| `{{.Request.Method}}`                | `GET`                                                                |
+| `{{.Request.URL.Protocol}}`          | `http`                                                               |
+| `{{.Request.URL.Path}}`              | `/kb/my_page.md`                                                     |
+| `{{.Request.URL.RawQuery}}`          | `v=11&1=99`                                                          |
+| `{{.Request.URL.Full}}`              | `https://example.org/kb/my_page.md`                                  |
+| `{{.Request.Header.AcceptLanguage}}` | `en`                                                                 |
+| `{{.Request.Header.Host}}`           | `example.org`                                                        |
+| `{{.Request.Header.Referer}}`        | `https://yandex.ru`                                                  |
+| `{{.Request.Header.UserAgent}}`      | `Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101 Firefox/91.0` |
 
-If you want to escape built in variable, you do this: `\{{\{MY_VAR\}\}`.
+If you want to escape built in variable, you do this: `\{\{MY_VAR\}\}`.

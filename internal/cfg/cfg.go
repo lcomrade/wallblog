@@ -59,15 +59,20 @@ type ConfigSiteMap struct {
 }
 
 type ConfigPage struct {
-	AutoTitle          ConfigPageAutoTitle
-	AddToHead          []string
-	EnableTemplateMode bool
+	AutoTitle    ConfigPageAutoTitle
+	AddToHead    []string
+	TemplateMode ConfigPageTemplateMode
 }
 
 type ConfigPageAutoTitle struct {
 	Enable bool
 	Prefix string
 	Sufix  string
+}
+
+type ConfigPageTemplateMode struct {
+	EnableForMainPage bool
+	EnableForPagePart bool
 }
 
 func Read(path string) (Config, error) {
@@ -99,8 +104,11 @@ func Read(path string) (Config, error) {
 				Prefix: "",
 				Sufix:  "",
 			},
-			AddToHead:          []string{},
-			EnableTemplateMode: true,
+			AddToHead: []string{},
+			TemplateMode: ConfigPageTemplateMode{
+				EnableForMainPage: true,
+				EnableForPagePart: true,
+			},
 		},
 	}
 

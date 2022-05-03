@@ -19,54 +19,10 @@
 package handler
 
 import (
-	"bytes"
 	"github.com/lcomrade/md2html/v2"
 	"net/http"
 	"path/filepath"
-	"strings"
-	"text/template"
 )
-
-type templateData struct {
-	URL templateDataURL
-}
-
-type templateDataURL struct {
-	Path string
-	Full string
-}
-
-func useTemplate(text string, req *http.Request) string {
-	// Prepare template data
-	tmplData := templateData{
-		URL: templateDataURL{
-			Path: req.URL.Path,
-			Full: getFullURL(req),
-		},
-	}
-
-	// New template
-	tmpl, err := template.New("Template").Parse(text)
-	if err != nil {
-		return text
-	}
-
-	// Execute template
-	var buffer bytes.Buffer
-
-	err = tmpl.Execute(&buffer, tmplData)
-	if err != nil {
-		return text
-	}
-
-	text = buffer.String()
-
-	// Escape
-	text = strings.Replace(text, `\{`, "{", -1)
-	text = strings.Replace(text, `\}`, "}", -1)
-
-	return text
-}
 
 func pagePart(nameWithoutExt string, req *http.Request) string {
 	basePath := filepath.Join(Config.WebRoot, nameWithoutExt)
@@ -75,7 +31,7 @@ func pagePart(nameWithoutExt string, req *http.Request) string {
 	page, err := readFile(basePath + ".htmlp")
 	if err == nil {
 		// Template mode
-		if Config.Page.EnableTemplateMode == true {
+		if Config.Page.TemplateMode.EnableForPagePart == true {
 			page = useTemplate(page, req)
 		}
 
@@ -87,7 +43,7 @@ func pagePart(nameWithoutExt string, req *http.Request) string {
 	page, err = readFile(basePath + ".md")
 	if err == nil {
 		// Template mode
-		if Config.Page.EnableTemplateMode == true {
+		if Config.Page.TemplateMode.EnableForPagePart == true {
 			page = useTemplate(page, req)
 		}
 

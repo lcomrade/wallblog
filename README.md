@@ -78,7 +78,10 @@ Default:
 			"Sufix": ""
 		},
 		"AddToHead": [],
-		"EnableTemplateMode": true
+		"TemplateMode": {
+			"EnableForMainPage": true,
+			"EnableForPagePart": true
+		}
 	}
 }
 ```

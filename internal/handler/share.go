@@ -47,7 +47,3 @@ func getSiteURL(req *http.Request) string {
 	// Return
 	return protocol + "://" + hostname
 }
-
-func getFullURL(req *http.Request) string {
-	return getSiteURL(req) + req.URL.Path
-}

@@ -23,10 +23,12 @@ import (
 	"net/http"
 	"strings"
 	"text/template"
+	"time"
 )
 
 type templateData struct {
 	Request templateDataRequest
+	Time    templateDataTime
 }
 
 type templateDataRequest struct {
@@ -50,7 +52,21 @@ type templateDataHeader struct {
 	UserAgent      string
 }
 
+type templateDataTime struct {
+	Unix    int64
+	Year    int
+	Month   int
+	Day     int
+	Weekday int
+	Hour    int
+	Minute  int
+	Second  int
+}
+
 func useTemplate(text string, req *http.Request) string {
+	// Get time
+	timeNow := time.Now().UTC()
+
 	// Prepare template data
 	tmplData := templateData{
 		Request: templateDataRequest{
@@ -69,6 +85,16 @@ func useTemplate(text string, req *http.Request) string {
 				UserAgent:      req.Header.Get("User-Agent"),
 			},
 		},
+		Time: templateDataTime{
+			Unix:    timeNow.Unix(),
+			Year:    timeNow.Year(),
+			Month:   int(timeNow.Month()),
+			Day:     timeNow.Day(),
+			Weekday: int(timeNow.Weekday()),
+			Hour:    timeNow.Hour(),
+			Minute:  timeNow.Minute(),
+			Second:  timeNow.Second(),
+		},
 	}
 
 	// Get scheme
@@ -84,6 +110,14 @@ func useTemplate(text string, req *http.Request) string {
 	// Get full URL
 	if req.URL.RawQuery != "" {
 		tmplData.Request.URL.Full = tmplData.Request.URL.Full + "?" + req.URL.RawQuery
+	}
+
+	// Get accept language
+	for _, lang := range strings.Split(tmplData.Request.Header.AcceptLanguage, ",") {
+		if len(lang) == 2 {
+			tmplData.Request.Header.AcceptLanguage = lang
+			break
+		}
 	}
 
 	// New template
